@@ -1,0 +1,19 @@
+/* Experience.css */
+.experience {
+    margin: 20px;
+  }
+  
+  .e-timeline .e-timeline-item {
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+  }
+  
+  .e-timeline .e-timeline-opposite-content {
+    font-weight: bold;
+  }
+  
+  .e-timeline .e-timeline-content {
+    padding: 10px;
+  }
+  
