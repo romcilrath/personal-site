@@ -3,8 +3,11 @@
     height: 100px;
     background: var(--primary-background);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    position: fixed; /* Added to keep navbar fixed on top */
+    top: 0; /* Ensure it stays at the top */
+    z-index: 1000; /* Ensure it stays above other content */
 }
-  
+
 .links {
     width: 100%;
     height: 100%;
@@ -32,6 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    transform-origin: right center; /* Ensure the transform origin is at the right center */
 }
 
 .toggleButton svg {
@@ -43,6 +47,10 @@
     border: none;
     color: white;
     cursor: pointer;
+}
+
+.navbar.small .toggleButton {
+    transform: translateY(calc(-25px * (100 - var(--navbar-height)) / 50)) scale(calc(0.5 + 0.5 * var(--navbar-height) / 100)); /* Move up and scale down relative to scroll height */
 }
 
 #open {

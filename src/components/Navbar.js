@@ -5,15 +5,29 @@ import ReorderIcon from "@mui/icons-material/Reorder";
 
 function Navbar() {
   const [expandNavbar, setExpandNavBar] = useState(false);
+  const [navbarHeight, setNavbarHeight] = useState(100);
 
   const location = useLocation();
 
   useEffect(() => {
     setExpandNavBar(false);
-  }, [location])
+  }, [location]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const newHeight = Math.max(50, 100 - window.scrollY / 2);
+      setNavbarHeight(newHeight);
+      document.documentElement.style.setProperty('--navbar-height', newHeight);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <div className="navbar" id={expandNavbar ? "open" : "close"}>
+    <div className={`navbar ${navbarHeight < 100 ? 'small' : ''}`} id={expandNavbar ? "open" : "close"} style={{ height: `${navbarHeight}px` }}>
         <div className="toggleButton">
           <button 
             onClick={ () => { 
@@ -32,4 +46,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default Navbar;
