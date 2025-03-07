@@ -7,7 +7,7 @@
 
 .about {
   width: 100%;
-  height: calc(100vh - 100px);
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start; 
@@ -21,8 +21,8 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 80px;
   color: var(--standout-text);
-  height: 50px;  
   padding-top: 100px;
+  margin-bottom: 0;
 }
 
 .about .prompt {
