@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar'; // Import Navbar
 import '../styles/Experience.css'
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
@@ -11,7 +10,6 @@ import ProjectIcon from '@mui/icons-material/Build';
 function Experience() {
   return (
     <div>
-      <Navbar /> {/* Add Navbar */}
       <div className="experience" style={{ paddingTop: '100px' }}> {/* Added paddingTop */}
         <VerticalTimeline>
           <VerticalTimelineElement
