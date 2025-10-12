@@ -3,7 +3,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import headshot from '../images/Me.png'; // Import the headshot image
-import "../styles/Home.css"; // Ensure the updated CSS file is imported
+import "../styles/Home.scss"; // Ensure the updated SCSS file is imported
 
 export class Home extends Component {
   render() {

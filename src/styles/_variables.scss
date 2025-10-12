@@ -1,0 +1,10 @@
+// Sass variables
+$mobile-width: 600px;
+
+// Expose CSS custom properties at runtime so JS and plain-CSS can read them.
+// Keeping these here lets us maintain one source of truth for colors and other CSS vars.
+:root {
+	--primary-background: #363636;  
+	--secondary-background: #1c1c96;
+	--standout-text: #ffffff;
+}

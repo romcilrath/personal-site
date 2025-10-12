@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 .footer {
   width: 100%;
   height: 200px;
@@ -19,7 +21,7 @@
   color: white;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: #{vars.$mobile-width}) {
   .footer svg {
     font-size: 50px;
   }

@@ -1,5 +1,5 @@
-import './App.css';
-import './styles/Global.css'; // Ensure the global styles are loaded
+import './App.scss';
+import './styles/_variables.scss'; // Load shared variables (colors + breakpoints)
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './pages/Home'
 import Projects from './pages/Projects'

@@ -1,23 +1,25 @@
+@import './variables';
+
 .navbar {
     width: 100%;
     height: 100px;
     background: var(--primary-background);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    position: fixed; /* Added to keep navbar fixed on top */
-    top: 0; /* Ensure it stays at the top */
-    z-index: 1000; /* Ensure it stays above other content */
+    position: fixed; 
+    top: 0; 
+    z-index: 1000; 
 }
 
 .links {
     width: 100%;
-    height: 100%; /* Default height */
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
 }
 
-.linkText {
+.linkText {    
     padding-left: 1vw;
     padding-right: 1vw;
 }
@@ -25,7 +27,7 @@
 .navbar a {
     color: white;
     text-decoration: none;
-    margin: 20px;
+    padding: 10px;
     font-size: 25px;
 }
 
@@ -55,33 +57,28 @@
 
 #open {
     height: 100vh;
-    background: var(--primary-background); /* Ensure green backdrop appears */
+    background: var(--primary-background);
 }
 
 #open .links {
     flex-direction: column;
     justify-content: flex-start;
-    margin-top: 0; /* Remove vertical gap */
-    height: auto; /* Unset height */
+    margin-top: 0;
+    height: auto;
 }
 
 #open a {
     width: 100%;
-    text-align: center;
-    background: var(--primary-background); /* Ensure green background for links */
-    flex: 1; /* Expand to fill vertical space */
+    text-align: center;    
+    background: color-mix(in srgb, var(--primary-background) 90%, white 10%);
+    flex: 1; 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-@media only screen and (max-width: 900px) {
-    .navbar a {
-        width: 70px;
-    }
-}
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: #{$mobile-width}) {
     .toggleButton {
         display: flex;
     }
@@ -90,7 +87,7 @@
     }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: #{$mobile-width}) {
     .toggleButton {
         display: none;
     }   
@@ -103,4 +100,9 @@
     #open .links {
         flex-direction: row;
     }
+}
+
+/* Also add a compiled-friendly fallback variable for runtime JS/CSS usage if desired */
+:root {
+  --mobile-width: #{$mobile-width};
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Experience.css'
+import '../styles/Experience.scss'
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import SchoolIcon from '@mui/icons-material/School';
