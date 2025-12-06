@@ -23,13 +23,33 @@
   width: 250px;
   height: 250px;
   border-radius: 50%;
-  margin-top: 130px;
+  margin-top: 80px;
+  margin-bottom: 15px;
   box-shadow: 0 16px 32px rgba(62, 73, 122, 0.18);
   border: 4px solid rgba(0,0,0,0.6);
-  /* entrance */
-  transform: translateY(18px) scale(0.98);
+  display: block;
+  object-fit: cover;
+  background-color: rgba(230,233,248,0.7);
+  will-change: transform, opacity;
+  /* base transition — we'll animate transform and opacity when loaded */
+  transition: transform 700ms var(--enter-ease), opacity 700ms var(--enter-ease), box-shadow 700ms var(--enter-ease);
+  /* default (before loaded): slightly lowered and angled so the entrance is an angle/rotate into place */
+  transform: perspective(700px) rotateX(18deg) translateY(14px) scale(.97);
+  /* invisible by default until explicitly revealed */
   opacity: 0;
-  animation: pop 700ms cubic-bezier(.2,.9,.2,1) forwards;
+  visibility: hidden;
+}
+
+/* state while the image file is still loading (no blur) */
+.about .headshot.loading {
+  opacity: 0;
+  visibility: hidden;
+  transform: perspective(700px) rotateX(18deg) translateY(14px) scale(.97);
+}
+
+/* final visible state — plays a rotated/angled entrance animation */
+.about .headshot.revealed.loaded {
+  animation: headshotEntrance 900ms cubic-bezier(.2,.9,.2,1) forwards;
 }
 
 .about h2 {
@@ -55,6 +75,10 @@
   --enter-ease: cubic-bezier(.2,.9,.2,1);
   --stagger: 110ms;
   --float-duration: 6s;
+  --name-accent: #6bffa6; /* warm accent that complements the site's palette */
+  --name-underline-thickness: 6px;
+  --name-underline-gap: 8px; /* space between text baseline and underline */
+  --name-underline-radius: 3px;
 }
 
 /* keyframes */
@@ -63,10 +87,33 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeInOnly {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 @keyframes pop {
   0%   { opacity: 0; transform: translateY(24px) scale(.96); }
   60%  { opacity: 1; transform: translateY(-6px) scale(1.02); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes headshotEntrance {
+  0% {
+    opacity: 0.6;
+    transform: perspective(700px) rotateX(22deg) translateY(28px) scale(.95);
+    box-shadow: 0 8px 20px rgba(62,73,122,0.10);
+  }
+  60% {
+    opacity: 1;
+    transform: perspective(700px) rotateX(-6deg) translateY(-8px) scale(1.04);
+    box-shadow: 0 24px 44px rgba(62,73,122,0.20);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(700px) rotateX(0deg) translateY(0) scale(1);
+    box-shadow: 0 18px 36px rgba(62,73,122,0.18);
+  }
 }
 
 @keyframes floatSubtle {
@@ -83,13 +130,89 @@
   animation: none;
 }
 
+/* Container for last name and its pronunciation guide */
+.last-name-with-pronunciation {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  margin-left: 0; /* keep inline with preceding text */
+  color: var(--name-accent);
+}
+
 /* Typewriter effect for name */
 .typewriter {
-  display: inline-block;
+  display: inline;
   white-space: nowrap;
+  font-weight: 600;
+}
+
+/* Highlight entire name (first and last) in accent color */
+.name-highlight {
+  color: var(--name-accent);
+  font-weight: 600;
+  display: inline;
+}
+
+/* Caret only on the last name */
+.typewriter-before {
+  border-right: none;
+  animation: none;
+}
+
+.typewriter-last {
   border-right: 0.12em solid currentColor; /* caret */
   animation: blink-caret 900ms step-end infinite;
-  font-weight: 600;
+  color: var(--name-accent);
+}
+.pronunciation-guide {
+  font-size: 14px;
+  color: var(--name-accent);
+  letter-spacing: 3px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  /* tighter box padding so it sits very close to the name */
+  padding: 2px 6px;
+  border: 1px solid #666;
+  border-radius: 4px;
+  background-color: rgba(102, 102, 102, 0.1);
+  opacity: 0;
+  animation: fadeInOnly var(--enter-duration) var(--enter-ease) forwards;
+  animation-delay: 0ms;
+  margin-top: 0px; /* keep it as close as possible */
+}
+
+.pronunciation-guide .syllable {
+  font-style: italic;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.pronunciation-guide .separator {
+  opacity: 0.6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* use a CSS circle dot instead of a character bullet */
+  width: 4px;
+  height: 4px;
+  padding: 0;
+  margin: 0 3px;
+  line-height: 1;
+}
+
+.pronunciation-guide .separator::before {
+  content: '';
+  width: 3px;
+  height: 3px;
+  background-color: currentColor;
+  border-radius: 50%;
+  display: block;
 }
 
 @keyframes blink-caret {
@@ -99,7 +222,6 @@
 
 .about .prompt p {
   opacity: 0;
-  transform: translateY(8px);
   line-height: 1.4;
 }
 
@@ -111,16 +233,16 @@
 
 /* When typing completes, reveal prompt and icons */
 .about.typing-complete .prompt p {
-  animation: fadeInUp var(--enter-duration) var(--enter-ease) forwards;
-  animation-delay: 120ms;
+  animation: fadeInOnly var(--enter-duration) var(--enter-ease) forwards;
+  animation-delay: 320ms;
 }
 .about.typing-complete .prompt svg {
   animation: pop var(--enter-duration) var(--enter-ease) forwards;
   animation-fill-mode: forwards;
 }
-.about.typing-complete .prompt svg:nth-of-type(1) { animation-delay: 220ms; }
-.about.typing-complete .prompt svg:nth-of-type(2) { animation-delay: 320ms; }
-.about.typing-complete .prompt svg:nth-of-type(3) { animation-delay: 420ms; }
+.about.typing-complete .prompt svg:nth-of-type(1) { animation-delay: 420ms; }
+.about.typing-complete .prompt svg:nth-of-type(2) { animation-delay: 520ms; }
+.about.typing-complete .prompt svg:nth-of-type(3) { animation-delay: 620ms; }
 .prompt svg:hover { transform: translateY(-4px) scale(1.03); transition: transform 160ms var(--enter-ease); }
 
 
@@ -163,18 +285,21 @@ li.item h2 {
 .skills .list li:nth-child(3) { animation-delay: 960ms; }
 .skills .list li:nth-child(4) { animation-delay: 1080ms; }
 
-/* small floating motion on the headshot after it finishes entrance */
-.about .headshot {
-  animation-name: pop;
-  animation-duration: var(--enter-duration);
-  animation-timing-function: var(--enter-ease);
+/* When the component requests reveal, make the image visible; the entrance
+   animation runs only when both `revealed` and `loaded` classes are present. */
+.about .headshot.revealed {
+  visibility: visible;
+}
+.about .headshot.revealed.loaded {
+  /* entrance handled by headshotEntrance keyframes (declared above) */
   animation-fill-mode: forwards;
 }
+
 .about .headshot:hover { transform: translateY(-6px) scale(1.02); transition: transform 220ms var(--enter-ease); }
 
-/* gentle infinite float (very subtle) - starts after the main pop completes */
+/* gentle infinite float (very subtle) - starts after the main entrance completes */
 .about .headshot.float-keep {
-  animation: pop var(--enter-duration) var(--enter-ease) forwards, floatSubtle var(--float-duration) ease-in-out 800ms infinite;
+  animation: headshotEntrance var(--enter-duration) var(--enter-ease) forwards, floatSubtle var(--float-duration) ease-in-out 700ms infinite;
 }
 
 /* Accessibility: respect reduced motion */
