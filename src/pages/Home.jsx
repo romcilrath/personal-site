@@ -164,9 +164,15 @@ export class Home extends Component {
               I love solving problems, exploring new tech, and building systems that make life easier. 
               I'm all about automating tasks and using AI to create smarter workflows.
             </p>
-            <EmailIcon/>
-            <LinkedInIcon/>
-            <GitHubIcon/>
+              <a href="mailto:romcilrath@gmail.com" aria-label="Email" title="Email" className="icon-link">
+                <EmailIcon />
+              </a>
+              <a href="https://www.linkedin.com/in/robert-mcilrath/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" className="icon-link">
+                <LinkedInIcon />
+              </a>
+              <a href="https://github.com/romcilrath" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" className="icon-link">
+                <GitHubIcon />
+              </a>
           </div>
         </div>
 
