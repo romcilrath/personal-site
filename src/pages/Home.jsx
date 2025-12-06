@@ -6,12 +6,76 @@ import headshot from '../images/Me.png'; // Import the headshot image
 import "../styles/Home.scss"; // Ensure the updated SCSS file is imported
 
 export class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      typedText: '',
+      typingComplete: false,
+    };
+    this._timers = [];
+  }
+
+  componentDidMount() {
+    // Clear any existing timers (handles HMR/StrictMode remounts) and reset text
+    this._timers.forEach(t => clearTimeout(t));
+    this._timers = [];
+    this.setState({ typedText: '', typingComplete: false });
+
+    // Respect reduced motion preference
+    const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const full = "Hi, I'm Rob McIlrath";
+    const firstPart = full.slice(0, 2); // "Hi"
+    const rest = full.slice(2); // ", I'm Rob McIlrath"
+    const charDelay = prefersReduced ? 0 : 65; // ms per char (approx 2x slower)
+    const pauseAfterHi = prefersReduced ? 0 : 900; // solid pause after "Hi"
+
+    // helper to type a string into state (safe: use charAt to avoid 'undefined')
+    const typeString = (str, onDone) => {
+      if (!str) { if (onDone) onDone(); return; }
+      let i = 0;
+      const tick = () => {
+        const ch = str.charAt(i) || '';
+        this.setState(prev => ({ typedText: prev.typedText + ch }));
+        i += 1;
+        if (i < str.length) {
+          this._timers.push(setTimeout(tick, charDelay));
+        } else if (onDone) {
+          onDone();
+        }
+      };
+      tick();
+    };
+
+    if (prefersReduced) {
+      // Immediately show full text and mark complete
+      this.setState({ typedText: full, typingComplete: true });
+      return;
+    }
+
+    // Type "Hi", pause, then type the rest
+    typeString(firstPart, () => {
+      this._timers.push(setTimeout(() => {
+        typeString(rest, () => {
+          this.setState({ typingComplete: true });
+        });
+      }, pauseAfterHi));
+    });
+  }
+
+  componentWillUnmount() {
+    this._timers.forEach(t => clearTimeout(t));
+    this._timers = [];
+  }
+
   render() {
+    const { typedText, typingComplete } = this.state;
+    const aboutClass = `about${typingComplete ? ' typing-complete' : ''}`;
+
     return (
       <div className="home">
-        <div className="about">
+        <div className={aboutClass}>
           <img className="headshot" src={headshot} alt="Me" /> {/* Reference the imported image */}
-          <h2>Hi, I'm Robert McIlrath</h2>
+          <h2 aria-label="Hi, I'm Rob McIlrath"><span className="typewriter" aria-hidden="true">{typedText}</span></h2>
           <div className="prompt">
             <p>
               I love solving problems, exploring new tech, and building systems that make life easier. 
@@ -22,6 +86,7 @@ export class Home extends Component {
             <GitHubIcon/>
           </div>
         </div>
+
         <div className="skills">
           <ol className="list">
             <li className="item">
@@ -43,7 +108,7 @@ export class Home extends Component {
           </ol>
         </div>
       </div>
-    )
+    );
   }
 }
 

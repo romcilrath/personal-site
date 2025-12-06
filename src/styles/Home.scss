@@ -24,7 +24,12 @@
   height: 250px;
   border-radius: 50%;
   margin-top: 130px;
-  box-shadow: 0 16px 24px rgba(62, 73, 122, 0.2);
+  box-shadow: 0 16px 32px rgba(62, 73, 122, 0.18);
+  border: 4px solid rgba(0,0,0,0.6);
+  /* entrance */
+  transform: translateY(18px) scale(0.98);
+  opacity: 0;
+  animation: pop 700ms cubic-bezier(.2,.9,.2,1) forwards;
 }
 
 .about h2 {
@@ -43,6 +48,81 @@
   margin: 5px;
   color: white;
 }
+
+/* -- Animation variables -- */
+:root {
+  --enter-duration: 700ms;
+  --enter-ease: cubic-bezier(.2,.9,.2,1);
+  --stagger: 110ms;
+  --float-duration: 6s;
+}
+
+/* keyframes */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop {
+  0%   { opacity: 0; transform: translateY(24px) scale(.96); }
+  60%  { opacity: 1; transform: translateY(-6px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes floatSubtle {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* about heading and prompt entrance */
+.about h2 {
+  /* heading is handled by the typewriter animation on the inner span */
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+/* Typewriter effect for name */
+.typewriter {
+  display: inline-block;
+  white-space: nowrap;
+  border-right: 0.12em solid currentColor; /* caret */
+  animation: blink-caret 900ms step-end infinite;
+  font-weight: 600;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: currentColor; }
+}
+
+.about .prompt p {
+  opacity: 0;
+  transform: translateY(8px);
+  line-height: 1.4;
+}
+
+/* icons: hidden by default */
+.prompt svg {
+  opacity: 0;
+  transform: translateY(8px) scale(.98);
+}
+
+/* When typing completes, reveal prompt and icons */
+.about.typing-complete .prompt p {
+  animation: fadeInUp var(--enter-duration) var(--enter-ease) forwards;
+  animation-delay: 120ms;
+}
+.about.typing-complete .prompt svg {
+  animation: pop var(--enter-duration) var(--enter-ease) forwards;
+  animation-fill-mode: forwards;
+}
+.about.typing-complete .prompt svg:nth-of-type(1) { animation-delay: 220ms; }
+.about.typing-complete .prompt svg:nth-of-type(2) { animation-delay: 320ms; }
+.about.typing-complete .prompt svg:nth-of-type(3) { animation-delay: 420ms; }
+.prompt svg:hover { transform: translateY(-4px) scale(1.03); transition: transform 160ms var(--enter-ease); }
+
 
 .skills {
   font-size: 35px;
@@ -72,6 +152,37 @@ li.item h2 {
   margin-bottom: 15px; /* Adjust the value to your desired spacing */
 }
 
+/* Staggered reveal for skills list */
+.skills .list li {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 560ms var(--enter-ease) forwards;
+}
+.skills .list li:nth-child(1) { animation-delay: 720ms; }
+.skills .list li:nth-child(2) { animation-delay: 840ms; }
+.skills .list li:nth-child(3) { animation-delay: 960ms; }
+.skills .list li:nth-child(4) { animation-delay: 1080ms; }
+
+/* small floating motion on the headshot after it finishes entrance */
+.about .headshot {
+  animation-name: pop;
+  animation-duration: var(--enter-duration);
+  animation-timing-function: var(--enter-ease);
+  animation-fill-mode: forwards;
+}
+.about .headshot:hover { transform: translateY(-6px) scale(1.02); transition: transform 220ms var(--enter-ease); }
+
+/* gentle infinite float (very subtle) - starts after the main pop completes */
+.about .headshot.float-keep {
+  animation: pop var(--enter-duration) var(--enter-ease) forwards, floatSubtle var(--float-duration) ease-in-out 800ms infinite;
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :root { --enter-duration: 1ms; --stagger: 1ms; --float-duration: 1ms; }
+  .about h2, .about .headshot, .prompt p, .prompt svg, .skills .list li { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+
 @media only screen and (max-width: #{vars.$mobile-width}) {
   .about h2 {
     font-size: 40px;
@@ -98,4 +209,9 @@ li.item h2 {
   .skills h2 {
     font-size: 30px;
   }
+}
+
+/* Respect reduced motion: show full text and remove caret */
+@media (prefers-reduced-motion: reduce) {
+  .typewriter { animation: none !important; border-right: none !important; width: auto !important; }
 }

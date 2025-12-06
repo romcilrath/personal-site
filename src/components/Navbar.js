@@ -17,8 +17,11 @@ function Navbar() {
     const handleScroll = () => {
       const newHeight = Math.max(50, 100 - window.scrollY / 2);
       setNavbarHeight(newHeight);
-      document.documentElement.style.setProperty('--navbar-height', newHeight);
+      document.documentElement.style.setProperty('--navbar-height', `${newHeight}px`);
     };
+
+    // set initial CSS var so navbar starts at full size
+    document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
 
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -27,21 +30,18 @@ function Navbar() {
   }, []);
 
   return (
-    <div className={`navbar ${navbarHeight < 100 ? 'small' : ''}`} id={expandNavbar ? "open" : "close"} style={{ height: `${navbarHeight}px` }}>
-        <div className="toggleButton">
-          <button 
-            onClick={ () => { 
-              setExpandNavBar((prev) => !prev);
-            }}
-          >
-            <ReorderIcon /> 
-          </button>
-        </div>
-        <div className="links">
-            <Link to="/" className="linkText"> Home </Link>
-            <Link to="/projects" className="linkText"> Projects </Link>
-            <Link to="/experience" className="linkText"> Experience </Link>
-        </div>
+    <div className="navbar" id={expandNavbar ? "open" : "closed"}> 
+      <button 
+        className="navbarToggleButton"
+        onClick={ () => { setExpandNavBar((prev) => !prev); } }
+      >
+      <ReorderIcon /> 
+      </button>
+      <div className="navbarLinksDiv">
+          <Link to="/" className="navbarLink"> Home </Link>
+          <Link to="/projects" className="navbarLink"> Projects </Link>
+          <Link to="/experience" className="navbarLink"> Experience </Link>
+      </div>
     </div>
   )
 }

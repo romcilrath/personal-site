@@ -3,7 +3,7 @@ import React from 'react';
 function Projects() {
   return (
     <div>
-      <div style={{ paddingTop: '100px' }}> {/* Added paddingTop */}
+      <div>
         Projects
       </div>
     </div>

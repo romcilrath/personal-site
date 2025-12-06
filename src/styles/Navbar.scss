@@ -2,62 +2,59 @@
 
 .navbar {
     width: 100%;
-    height: 100px;
     background: var(--primary-background);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     position: fixed; 
+    transform-origin: top center;
     top: 0; 
-    z-index: 1000; 
+    z-index: 1000;     
+    height: var(--navbar-height, 100px);
+    --nav-scale: calc(var(--navbar-height, 100px) / 100px);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
-.links {
+.navbar .navbarLinksDiv {
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: left;
     justify-content: center;
     color: white;
 }
 
-.linkText {    
+.navbar .navbarLinksDiv .navbarLink {    
     padding-left: 1vw;
     padding-right: 1vw;
-}
-
-.navbar a {
     color: white;
     text-decoration: none;
     padding: 10px;
     font-size: 25px;
 }
 
-.toggleButton {
-    width: 100%;
-    height: 100px;
+.navbar .navbarToggleButton {
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    transform-origin: right center; /* Ensure the transform origin is at the right center */
-}
-
-.toggleButton svg {
-    font-size: 50px;
-}
-.toggleButton button {
-    margin-right: 20px;
+    justify-content: center;
     background-color: transparent;
     border: none;
     color: white;
     cursor: pointer;
 }
 
-.navbar.small .toggleButton {
-    transform: translateY(calc(-25px * (100 - var(--navbar-height)) / 50)) scale(calc(0.5 + 0.5 * var(--navbar-height) / 100)); /* Move up and scale down relative to scroll height */
+.navbar .navbarToggleButton svg {
+    font-size: calc(50px * var(--nav-scale));
+    padding-left: calc(10px * var(--nav-scale));
+    padding-right: calc(10px * var(--nav-scale));
 }
 
 #open {
-    height: 100vh;
+    height: 30vh !important;
     background: var(--primary-background);
+    --nav-scale: 1;
 }
 
 #open .links {
@@ -77,32 +74,35 @@
     justify-content: center;
 }
 
-
-@media only screen and (max-width: #{$mobile-width}) {
-    .toggleButton {
-        display: flex;
-    }
-    #close a {
-        display: none;
-    }
+#closed .links {
+    display: none
 }
 
-@media only screen and (min-width: #{$mobile-width}) {
-    .toggleButton {
-        display: none;
-    }   
-    .hiddenLinks {
-        display: none;
-    }   
-    #open {
-        height: 100px;
-    }   
-    #open .links {
-        flex-direction: row;
-    }
+#closed a {
+    display: none
 }
 
-/* Also add a compiled-friendly fallback variable for runtime JS/CSS usage if desired */
-:root {
-  --mobile-width: #{$mobile-width};
-}
+
+// @media only screen and (max-width: #{$mobile-width}) {
+//     .navbarToggleButton {
+//         display: flex;
+//     }
+//     #closed a {
+//         display: none;
+//     }
+// }
+
+// @media only screen and (min-width: #{$mobile-width}) {
+//     .navbarToggleButton {
+//         display: none;
+//     }   
+//     .hiddenLinks {
+//         display: none;
+//     }   
+//     #open {
+//         height: 100px;
+//     }   
+//     #open .links {
+//         flex-direction: row;
+//     }
+// }
