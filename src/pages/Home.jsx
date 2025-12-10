@@ -32,7 +32,6 @@ export class Home extends Component {
   const firstPart = 'Hi';
   const rest = full.slice(firstPart.length);
     const charDelay = prefersReduced ? 0 : 65; // ms per char (approx 2x slower)
-    const pauseAfterHi = prefersReduced ? 0 : 900; // solid pause after "Hi"
 
     // helper to type a string into state (safe: use charAt to avoid 'undefined')
     const typeString = (str, onDone) => {
@@ -123,7 +122,6 @@ export class Home extends Component {
     // Further split the name at the last name
     const lastName = 'McIlrath';
     const lastNameStart = name.indexOf(lastName);
-    const firstName = name.slice(0, lastNameStart);
     const firstNamePart = namePart.slice(0, lastNameStart);
     const lastNamePart = namePart.slice(lastNameStart);
 
