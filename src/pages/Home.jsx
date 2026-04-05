@@ -160,7 +160,7 @@ export class Home extends Component {
           </h2>
           <div className="prompt">
             <p>
-              Software Engineer specializing in Python backend systems, distributed task processing, and internal platforms.
+              A Software Engineer (II) specializing in Python backend systems, distributed task processing, and internal platforms.
             </p>
             <p>
               I love solving problems, exploring new tech, and building systems that make life easier.

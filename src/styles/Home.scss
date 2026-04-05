@@ -350,12 +350,11 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
   white-space: nowrap;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 
   &:hover {
     background: rgba(107, 255, 166, 0.12);
     border-color: var(--accent);
-    transform: translateY(-1px);
   }
 }
 
@@ -431,7 +430,25 @@
 
   .skills__grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 20px;
+  }
+
+  .skills__category {
+    padding: 18px 20px;
+
+    h3 {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .skills__chips {
+    gap: 6px;
+  }
+
+  .chip {
+    padding: 5px 12px;
+    font-size: 13px;
   }
 
   .section-title {
