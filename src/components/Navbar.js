@@ -1,49 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
-import ReorderIcon from "@mui/icons-material/Reorder";
+import MenuIcon from "@mui/icons-material/Reorder";
+import CloseIcon from "@mui/icons-material/Close";
 
 function Navbar() {
-  const [expandNavbar, setExpandNavBar] = useState(false);
-  const [navbarHeight, setNavbarHeight] = useState(100);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    setExpandNavBar(false);
-  }, [location]);
+  const [visible, setVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const newHeight = Math.max(50, 100 - window.scrollY / 2);
-      setNavbarHeight(newHeight);
-      document.documentElement.style.setProperty('--navbar-height', `${newHeight}px`);
+      setVisible(window.scrollY > window.innerHeight * 0.6);
     };
-
-    // set initial CSS var so navbar starts at full size
-    document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleClick = () => setMenuOpen(false);
+
+  const links = [
+    { label: "Skills", href: "#skills" },
+    { label: "Experience", href: "#experience" },
+    { label: "Projects", href: "#projects" },
+  ];
+
   return (
-    <div className="navbar" id={expandNavbar ? "open" : "closed"}> 
-      <button 
-        className="navbarToggleButton"
-        onClick={ () => { setExpandNavBar((prev) => !prev); } }
+    <nav className={`navbar ${visible ? "navbar--visible" : ""} ${menuOpen ? "navbar--open" : ""}`}>
+      <a href="#top" className="navbar__brand" onClick={handleClick}>RM</a>
+      <button
+        className="navbar__toggle"
+        onClick={() => setMenuOpen((prev) => !prev)}
+        aria-label="Toggle navigation"
       >
-      <ReorderIcon /> 
+        {menuOpen ? <CloseIcon /> : <MenuIcon />}
       </button>
-      <div className="navbarLinksDiv">
-          <Link to="/" className="navbarLink"> Home </Link>
-          <Link to="/projects" className="navbarLink"> Projects </Link>
-          <Link to="/experience" className="navbarLink"> Experience </Link>
+      <div className="navbar__links">
+        {links.map((l) => (
+          <a key={l.href} href={l.href} className="navbar__link" onClick={handleClick}>
+            {l.label}
+          </a>
+        ))}
       </div>
-    </div>
-  )
+    </nav>
+  );
 }
 
 export default Navbar;

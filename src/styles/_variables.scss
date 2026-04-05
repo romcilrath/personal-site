@@ -2,9 +2,13 @@
 $mobile-width: 600px;
 
 // Expose CSS custom properties at runtime so JS and plain-CSS can read them.
-// Keeping these here lets us maintain one source of truth for colors and other CSS vars.
 :root {
-	--primary-background: #363636;  
-	--secondary-background: #1c1c96;
+	--primary-background: #2d2d3d;
+	--secondary-background: #1a1a2e;
 	--standout-text: #ffffff;
+	--accent: #6bffa6;
+	--surface-card: #232340;
+	--text-primary: #f0f0f0;
+	--text-secondary: #a0a0b8;
+	--border-subtle: rgba(255, 255, 255, 0.08);
 }

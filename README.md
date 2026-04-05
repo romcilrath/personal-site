@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+# Rob McIlrath's Portfolio Site
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The goal is to keep it simple, but communicate my experience in a nicely formatted front end. The main goal is to show I understand enough about full stack development to tailor a personal portfolio site as well as the wherewithal to host it. And that I care enough to do so--just like a good employee might. 
 
-## Available Scripts
+## Don't Forget
 
-In the project directory, you can run:
+Stuff I'll forget in a few months if I don't write it down. Generally discovered by forgetting it at least once.
 
-### `npm start`
+### Commands
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`npm start`: Starts the site in dev mode.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+`npm run build`: Builds it into the `portfolio-site/build` folder. 
 
-### `npm test`
+### To Update Deployment
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`https://hpanel.hostinger.com/` or just `https://hostinger.com/` is our provider. A bit of a weird choice I went with in a spur of the moment choice after successfull YouTube video marketing with a promo code discount and worth changing probably. 
 
-### `npm run build`
+Also a warning, Hostinger seems to love renaming/ shuffling/ updating their UI routinely. Just stumble around and you'll find things. Guide below probably will fall out of date quickly before Step 4. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To deploy:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Log in
+2. Under `Websites` look for `www.robmcilrath.com`
+3. Find the `File Manager` section under `Tools`
+4. Build the site with `npm run build`
+5. Delete contents of `/public_html`
+6. Copy contents of `/portfolio-site/build` into `/public_html`

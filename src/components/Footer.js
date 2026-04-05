@@ -18,7 +18,7 @@ function Footer() {
         <GitHubIcon />
       </a>
     </div>
-        <p> &copy; 2025 www.robmcilrath.com</p>
+        <p> &copy; 2026 robmcilrath.com</p>
     </div>
   )
 }

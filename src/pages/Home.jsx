@@ -2,8 +2,18 @@ import React, { Component } from 'react';
 import EmailIcon from "@mui/icons-material/Email";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import headshot from '../images/Me.png'; // Import the headshot image
-import "../styles/Home.scss"; // Ensure the updated SCSS file is imported
+import headshot from '../images/Me.png';
+import useInView from '../hooks/useInView';
+import "../styles/Home.scss";
+
+function RevealSection({ children, className = '', ...rest }) {
+  const [ref, inView] = useInView();
+  return (
+    <div ref={ref} className={`${className} ${inView ? 'in-view' : ''}`} {...rest}>
+      {children}
+    </div>
+  );
+}
 
 export class Home extends Component {
   constructor(props) {
@@ -126,7 +136,7 @@ export class Home extends Component {
     const lastNamePart = namePart.slice(lastNameStart);
 
     return (
-      <div className="home">
+      <div className="home" id="top">
         <div className={aboutClass}>
           <img
             className={`headshot ${this.state.imgLoaded ? 'loaded' : 'loading'} ${this.state.headshotRevealed ? 'revealed' : ''}`}
@@ -146,21 +156,14 @@ export class Home extends Component {
             <span className="name-highlight">{firstNamePart}</span>
             <div className="last-name-with-pronunciation">
               <span className="typewriter typewriter-last name-highlight" aria-hidden="true">{lastNamePart}</span>
-              {typingComplete && (
-                <div className="pronunciation-guide">
-                  (<span className="syllable">mack</span>
-                  <span className="separator"></span>
-                  <span className="syllable">el</span>
-                  <span className="separator"></span>
-                  <span className="syllable">rath</span>)
-                </div>
-              )}
             </div>
           </h2>
           <div className="prompt">
             <p>
-              I love solving problems, exploring new tech, and building systems that make life easier. 
-              I'm all about automating tasks and using AI to create smarter workflows.
+              Software Engineer specializing in Python backend systems, distributed task processing, and internal platforms.
+            </p>
+            <p>
+              I love solving problems, exploring new tech, and building systems that make life easier.
             </p>
               <a href="mailto:romcilrath@gmail.com" aria-label="Email" title="Email" className="icon-link">
                 <EmailIcon />
@@ -174,26 +177,29 @@ export class Home extends Component {
           </div>
         </div>
 
-        <div className="skills">
-          <ol className="list">
-            <li className="item">
-              <h2>Languages</h2>
-              <span>Python, C#, Java, HTML/CSS, JavaScript, C, R, Windows Batch Script, SQL</span>
-            </li>
-            <li className="item">
-              <h2>Technologies</h2>
-              <span>Android SDK, Android Studio, ADB, SSH</span>
-            </li>
-            <li className="item">
-              <h2>Frameworks and Libraries</h2>
-              <span>OpenAI, Numpy, Celery, Robot, TKinter, MySQL, PostgreSQL, MongoDB, Elastic Search, ExpressJS, Angular, React, Node, Google APIs, Jira API, Flask</span>
-            </li>
-            <li className="item">
-              <h2>Tools</h2>
-              <span>Git, Gerrit, Jira, Postman, Polarion, Jenkins, Docker, Power Automate</span>
-            </li>
-          </ol>
-        </div>
+        <RevealSection className="skills" id="skills">
+          <h2 className="section-title">Technical Skills</h2>
+          <div className="skills__grid">
+            {[
+              { category: 'Languages', items: ['Python', 'C#', 'SQL', 'JavaScript', 'HTML/CSS'] },
+              { category: 'Backend & Systems', items: ['Flask', 'Node.js', 'Express', 'Celery', 'Redis', 'REST APIs'] },
+              { category: 'AI & Vector Search', items: ['LangChain', 'LLM APIs (OpenAI, Anthropic)', 'Qdrant', 'Elasticsearch'] },
+              { category: 'Data', items: ['PostgreSQL', 'MySQL', 'MongoDB'] },
+              { category: 'Frontend', items: ['React', 'Angular'] },
+              { category: 'Infrastructure & Tools', items: ['Docker', 'Kubernetes', 'GCP', 'Jenkins', 'Git', 'GitHub', 'Gerrit'] },
+              { category: 'Testing & Automation', items: ['Pytest', 'Robot Framework'] },
+            ].map((group) => (
+              <div className="skills__category" key={group.category}>
+                <h3>{group.category}</h3>
+                <div className="skills__chips">
+                  {group.items.map((item) => (
+                    <span className="chip" key={item}>{item}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </RevealSection>
       </div>
     );
   }
