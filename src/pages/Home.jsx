@@ -176,6 +176,8 @@ export class Home extends Component {
                 className={`headshot ${this.state.imgLoaded ? 'loaded' : 'loading'} ${this.state.headshotRevealed ? 'revealed' : ''}`}
                 src={headshot}
                 alt="Me"
+                draggable="false"
+                onContextMenu={(e) => e.preventDefault()}
                 onLoad={() => this.setState({ imgLoaded: true }, () => {
                   // If a reveal is pending, run it now
                   if (this._pendingReveal) {
