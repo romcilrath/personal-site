@@ -1,8 +1,7 @@
 @use './variables' as vars;
 
 .projects {
-  padding: 80px 20px 120px;
-  min-height: 90vh;
+  padding: clamp(48px, 8vh, 120px) 20px clamp(40px, 5vh, 80px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,18 +42,21 @@
 }
 
 .project-card {
-  background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
+  background: rgba(20, 20, 45, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 12px;
   padding: 24px;
   cursor: pointer;
-  transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
   text-align: left;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
   &:hover {
-    border-color: rgba(107, 255, 166, 0.25);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    transform: translateY(-2px);
+    background: rgba(20, 20, 45, 0.7);
+    border-color: rgba(107, 255, 166, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
 }
 
@@ -84,6 +86,18 @@
 
 .project-card__icon--rotated {
   transform: rotate(180deg);
+}
+
+.project-card__hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  margin-top: 12px;
+  transition: opacity 0.2s;
+}
+
+.project-card--open .project-card__hint {
+  display: none;
 }
 
 .project-card__chips {

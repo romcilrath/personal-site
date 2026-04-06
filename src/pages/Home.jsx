@@ -23,13 +23,16 @@ export class Home extends Component {
       typingComplete: false,
       imgLoaded: false,
       headshotRevealed: false,
+      scrolled: false,
     };
     this._timers = [];
     this._pendingContinue = null; // function to call when image loads to continue typing
     this._pendingReveal = null; // function to call when image loads to reveal headshot
+    this._handleScroll = this._handleScroll.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', this._handleScroll, { passive: true });
     // Clear any existing timers (handles HMR/StrictMode remounts) and reset text
     this._timers.forEach(t => clearTimeout(t));
     this._timers = [];
@@ -113,13 +116,19 @@ export class Home extends Component {
     });
   }
 
+  _handleScroll() {
+    const scrolled = window.scrollY > 10;
+    this.setState({ scrolled });
+  }
+
   componentWillUnmount() {
     this._timers.forEach(t => clearTimeout(t));
     this._timers = [];
+    window.removeEventListener('scroll', this._handleScroll);
   }
 
   render() {
-    const { typedText, typingComplete } = this.state;
+    const { typedText, typingComplete, scrolled } = this.state;
     const aboutClass = `about${typingComplete ? ' typing-complete' : ''}`;
     
     // Split text at the last name for pronunciation guide placement
@@ -151,31 +160,47 @@ export class Home extends Component {
             })}
             loading="lazy"
           />
-          <h2 aria-label="Hi, I'm Rob McIlrath">
+          <h1 aria-label="Hi, I'm Rob McIlrath">
             <span className="typewriter typewriter-before" aria-hidden="true">{beforeName}</span>
             <span className="name-highlight">{firstNamePart}</span>
             <div className="last-name-with-pronunciation">
               <span className="typewriter typewriter-last name-highlight" aria-hidden="true">{lastNamePart}</span>
             </div>
-          </h2>
+          </h1>
           <div className="prompt">
-            <p>
-              A Software Engineer (II) specializing in Python backend systems, distributed task processing, and internal platforms.
+            <p className="prompt__specialization">
+              A Software Engineer (II) at Zebra Technologies with over 4 years experience. I specialize in Python backend systems, distributed task processing, and internal tooling platforms.
             </p>
             <p>
               I love solving problems, exploring new tech, and building systems that make life easier.
             </p>
               <a href="mailto:romcilrath@gmail.com" aria-label="Email" title="Email" className="icon-link">
                 <EmailIcon />
+                <span className="icon-label">Email</span>
               </a>
               <a href="https://www.linkedin.com/in/robert-mcilrath/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" className="icon-link">
                 <LinkedInIcon />
+                <span className="icon-label">LinkedIn</span>
               </a>
               <a href="https://github.com/romcilrath" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" className="icon-link">
                 <GitHubIcon />
+                <span className="icon-label">GitHub</span>
               </a>
           </div>
+          <div
+            className={`scroll-indicator${scrolled ? ' scroll-indicator--hidden' : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-label="Scroll to skills section"
+            onClick={() => document.getElementById('skills').scrollIntoView({ behavior: 'smooth' })}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') document.getElementById('skills').scrollIntoView({ behavior: 'smooth' }); }}
+          >
+            <span className="scroll-indicator__text">Scroll Down</span>
+            <span className="scroll-indicator__arrow">&#8595;</span>
+          </div>
         </div>
+
+        <hr className="section-divider" />
 
         <RevealSection className="skills" id="skills">
           <h2 className="section-title">Technical Skills</h2>

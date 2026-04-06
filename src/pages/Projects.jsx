@@ -23,10 +23,10 @@ const projects = [
 ];
 
 function ProjectCard({ project }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
-    <div className={`project-card ${open ? 'project-card--open' : ''}`} onClick={() => setOpen((prev) => !prev)}>
+    <div className={`project-card ${open ? 'project-card--open' : ''}`} onClick={() => setOpen((prev) => !prev)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen((prev) => !prev); } }}>
       <div className="project-card__header">
         <h3 className="project-card__title">{project.title}</h3>
         <ExpandMoreIcon className={`project-card__icon ${open ? 'project-card__icon--rotated' : ''}`} />
@@ -36,6 +36,7 @@ function ProjectCard({ project }) {
           <span className="chip" key={t}>{t}</span>
         ))}
       </div>
+      {!open && <p className="project-card__hint">Click to expand</p>}
       <div className={`project-card__details ${open ? 'project-card__details--open' : ''}`}>
         <ul>
           {project.bullets.map((b, i) => (

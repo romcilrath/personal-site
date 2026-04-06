@@ -12,9 +12,13 @@ function App() {
     <div className="App">
       <Navbar />
       <Home />
+      <hr className="section-divider" />
       <Experience />
-      <Projects />
-      <Footer />
+      <hr className="section-divider" />
+      <div className="projects-footer-wrap">
+        <Projects />
+        <Footer />
+      </div>
     </div>
   );
 }

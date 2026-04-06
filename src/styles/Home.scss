@@ -10,6 +10,7 @@
 .about {
   width: 100%;
   height: 100vh;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start; 
@@ -52,7 +53,7 @@
   animation: headshotEntrance 1200ms cubic-bezier(.2,.9,.2,1) forwards;
 }
 
-.about h2 {
+.about h1 {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 72px;
   font-weight: 700;
@@ -126,7 +127,7 @@
 }
 
 /* about heading and prompt entrance */
-.about h2 {
+.about h1 {
   /* heading is handled by the typewriter animation on the inner span */
   opacity: 1;
   transform: none;
@@ -167,6 +168,12 @@
   border-right: 0.12em solid currentColor; /* caret */
   animation: blink-caret 900ms step-end infinite;
   color: var(--name-accent);
+}
+
+/* Stop caret blinking after typing completes */
+.about.typing-complete .typewriter-last {
+  border-right-color: transparent;
+  animation: none;
 }
 .pronunciation-guide {
   font-size: 14px;
@@ -228,11 +235,37 @@
   line-height: 1.4;
 }
 
+.about .prompt .prompt__specialization {
+  color: var(--text-primary);
+}
+
 /* icons: hidden by default */
 .prompt svg {
   font-size: 60px;
   margin: 5px;
   color: #6bffa6;
+}
+
+/* Icon labels below social icons */
+.icon-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: -12px;
+  letter-spacing: 0.5px;
+}
+
+.icon-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  gap: 0;
+}
+
+.icon-link:hover .icon-label {
+  color: var(--accent);
 }
 
 /* HIDE THE CONTAINERS: hide the <a> containers initially */
@@ -287,7 +320,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80px 20px;
+  min-height: 100vh;
+  padding: clamp(48px, 8vh, 120px) 20px;
   /* slow-moving gradient background — GPU-friendly, no JS */
   background: linear-gradient(
     135deg,
@@ -302,26 +336,34 @@
 }
 
 .skills__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   width: 100%;
   max-width: 960px;
 }
 
 .skills__category {
-  background: rgba(35, 35, 64, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(107, 255, 166, 0.08);
-  border-radius: 14px;
+  flex: 0 1 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: rgba(20, 20, 45, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
   padding: 22px 24px;
-  text-align: left;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
 
   &:hover {
-    border-color: rgba(107, 255, 166, 0.2);
-    box-shadow: 0 4px 24px rgba(107, 255, 166, 0.05);
+    background: rgba(20, 20, 45, 0.7);
+    border-color: rgba(107, 255, 166, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
 
   h3 {
@@ -338,6 +380,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  justify-content: center;
+  flex: 1;
+  align-content: center;
 }
 
 .chip {
@@ -346,14 +391,14 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 20px;
   white-space: nowrap;
   transition: background 0.2s, border-color 0.2s;
 
   &:hover {
-    background: rgba(107, 255, 166, 0.12);
+    background: rgba(107, 255, 166, 0.18);
     border-color: var(--accent);
   }
 }
@@ -404,12 +449,76 @@
 /* Accessibility: respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   :root { --enter-duration: 1ms; --stagger: 1ms; --float-duration: 1ms; }
-  .about h2, .about .headshot, .prompt p, .prompt svg, .skills__category { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .about h1, .about .headshot, .prompt p, .prompt svg, .skills__category { animation: none !important; opacity: 1 !important; transform: none !important; }
   .skills { animation: none !important; }
 }
 
+/* Scroll-down indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+  user-select: none;
+}
+
+.about.typing-complete .scroll-indicator {
+  animation: fadeInOnly 0.8s ease 0.8s forwards;
+}
+
+/* Continuous opacity pulse on container after fade-in */
+.about.typing-complete .scroll-indicator:not(.scroll-indicator--hidden) {
+  animation: fadeInOnly 0.8s ease 0.8s forwards,
+             indicatorOpacity 3s ease-in-out 1.6s infinite;
+}
+
+.scroll-indicator--hidden {
+  opacity: 0 !important;
+  animation: none !important;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+
+.scroll-indicator__text {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.scroll-indicator__arrow {
+  display: block;
+  font-size: 20px;
+  color: var(--text-secondary);
+  animation: bounceArrow 3s ease-in-out infinite;
+}
+
+.scroll-indicator:hover .scroll-indicator__text,
+.scroll-indicator:hover .scroll-indicator__arrow {
+  color: var(--accent);
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+@keyframes indicatorOpacity {
+  0%        { opacity: 1.0;  }
+  50%       { opacity: 0.4;  }
+  100%      { opacity: 1.0;  }
+}
+
 @media only screen and (max-width: #{vars.$mobile-width}) {
-  .about h2 {
+  .about h1 {
     font-size: 36px;
   }
 
@@ -429,8 +538,8 @@
   }
 
   .skills__grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .skills__category {
