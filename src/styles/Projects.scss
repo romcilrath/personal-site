@@ -10,13 +10,13 @@
   background: linear-gradient(
     135deg,
     #1a1a2e 0%,
-    #1e1e38 25%,
+    #222244 25%,
     #1a1a2e 50%,
-    #1c2636 75%,
+    #182d42 75%,
     #1a1a2e 100%
   );
   background-size: 400% 400%;
-  animation: subtleGradientShift 22s ease infinite;
+  animation: subtleGradientShift 20s ease infinite;
 }
 
 @keyframes subtleGradientShift {

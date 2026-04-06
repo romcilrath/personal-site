@@ -367,13 +367,13 @@
   background: linear-gradient(
     135deg,
     #1a1a2e 0%,
-    #1f1f3a 25%,
+    #232347 25%,
     #1a1a2e 50%,
-    #1e2a3a 75%,
+    #1a3045 75%,
     #1a1a2e 100%
   );
   background-size: 400% 400%;
-  animation: subtleGradientShift 20s ease infinite;
+  animation: subtleGradientShift 18s ease infinite;
 }
 
 .skills__grid {
@@ -438,9 +438,11 @@
   white-space: nowrap;
   transition: background 0.2s, border-color 0.2s;
 
-  &:hover {
-    background: rgba(107, 255, 166, 0.18);
-    border-color: var(--accent);
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(107, 255, 166, 0.18);
+      border-color: var(--accent);
+    }
   }
 }
 
@@ -506,16 +508,11 @@
   align-items: center;
   gap: 4px;
   cursor: pointer;
-  transition: opacity 0.5s ease;
   user-select: none;
   z-index: 2;
 }
 
-.about.typing-complete .scroll-indicator {
-  animation: fadeInOnly 0.8s ease 0.8s forwards;
-}
-
-/* Continuous opacity pulse on container after fade-in */
+/* Fade-in + continuous pulse (single rule avoids animation restarts) */
 .about.typing-complete .scroll-indicator:not(.scroll-indicator--hidden) {
   animation: fadeInOnly 0.8s ease 0.8s forwards,
              indicatorOpacity 3s ease-in-out 1.6s infinite;
