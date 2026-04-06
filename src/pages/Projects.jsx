@@ -8,16 +8,16 @@ const projects = [
     title: 'AI-Driven Ticket Search & Creation Tool',
     tech: ['Python', 'Node.js', 'React', 'Qdrant', 'Redis', 'Celery', 'MySQL'],
     bullets: [
-      'Created a full-stack RAG system enabling semantic search and automated Jira ticket creation across thousands of internal records.',
-      'Designed distributed Celery/Redis ingestion pipeline for high-frequency data synchronization and embedding generation, maintaining API-rate-limited updates at 15-minute intervals.',
+      <>Created a <span className="text-highlight">full-stack RAG system</span> enabling <span className="text-highlight">semantic search</span> and <span className="text-highlight">automated Jira ticket creation</span> across thousands of internal records.</>,
+      <>Designed <span className="text-highlight">distributed Celery/Redis ingestion pipeline</span> for high-frequency data synchronization and embedding generation, maintaining API-rate-limited updates at <span className="text-highlight">15-minute intervals</span>.</>,
     ],
   },
   {
     title: 'Device Provisioning Portal',
     tech: ['Python', 'Flask', 'React', 'Ping SSO', 'Jenkins'],
     bullets: [
-      'Built a secure company Ping SSO-integrated internal web application to automate the whitelisting and flashing of restricted Android firmware.',
-      'Designed and deployed a Flask/React portal for managing sensitive device serial number whitelisting, replacing manual IT tickets with an automated workflow that reduced turnaround time from days to under 30 minutes.',
+      <>Built a secure company <span className="text-highlight">Ping SSO-integrated</span> internal web application to automate the whitelisting and flashing of restricted Android firmware.</>,
+      <>Designed and deployed a <span className="text-highlight">Flask/React portal</span> for managing sensitive device serial number whitelisting, replacing manual IT tickets with an automated workflow that reduced turnaround time from <span className="text-highlight">days to under 30 minutes</span>.</>,
     ],
   },
 ];

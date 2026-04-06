@@ -18,13 +18,13 @@ function Experience() {
           <div className="timeline__content">
             <span className="timeline__date">Feb 2022 – Present</span>
             <h3 className="timeline__title">Software Engineer II</h3>
-            <h4 className="timeline__subtitle">Zebra Technologies</h4>
+            <h4 className="timeline__subtitle timeline__subtitle--company">Zebra Technologies</h4>
             <ul className="timeline__bullets">
-              <li>Architected LLM-powered internal tooling using LangChain and RAG to enable natural language search of ticket database and automated ticket creation from large-scale datasets of automated test results.</li>
-              <li>Built distributed ingestion pipelines to populate a custom vector database of tickets, processing 10k+ records per day and leveraged to prevent duplicate issue creation.</li>
-              <li>Developed internal tools using Flask APIs and React interfaces, integrating Ping SSO to securely enable authorized team members to automate device provisioning and firmware whitelisting workflows.</li>
-              <li>Automated and revitalized Stability Testing and MTBF reporting pipelines, generating enhanced weekly reliability metrics for engineering teams.</li>
-              <li>Maintained and evolved a critical Python/Robot Framework library used across CI/CD pipelines.</li>
+              <li>Architected <span className="text-highlight">LLM-powered internal tooling</span> using <span className="text-highlight">LangChain and RAG</span> to enable <span className="text-highlight">natural language search</span> of ticket database and <span className="text-highlight">automated ticket creation</span> from large-scale datasets of automated test results.</li>
+              <li>Built <span className="text-highlight">distributed ingestion pipelines</span> to populate a custom vector database of tickets, processing <span className="text-highlight">10k+ records per day</span> and leveraged to prevent duplicate issue creation.</li>
+              <li>Developed internal tools using <span className="text-highlight">Flask APIs and React interfaces</span>, integrating <span className="text-highlight">Ping SSO</span> to securely enable authorized team members to automate device provisioning and firmware whitelisting workflows.</li>
+              <li>Automated and revitalized <span className="text-highlight">Stability Testing and MTBF reporting pipelines</span>, generating enhanced weekly reliability metrics for engineering teams.</li>
+              <li>Maintained and evolved a <span className="text-highlight">critical Python/Robot Framework library</span> used across <span className="text-highlight">CI/CD pipelines</span>.</li>
             </ul>
           </div>
         </div>

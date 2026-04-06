@@ -40,6 +40,15 @@ body {
   box-sizing: border-box;
 }
 
+.text-highlight {
+  color: #dfffea;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(107, 255, 166, 0.45);
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.14em;
+}
+
 /* Section divider — subtle gradient line between sections */
 .section-divider {
   width: 100%;

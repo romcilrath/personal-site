@@ -168,8 +168,12 @@ export class Home extends Component {
             </div>
           </h1>
           <div className="prompt">
+            <div className="hero-meta" aria-label="Availability and location">
+              <span className="hero-pill hero-pill--status">Open to work</span>
+              <span className="hero-pill">Based in NYC</span>
+            </div>
             <p className="prompt__specialization">
-              A Software Engineer (II) at Zebra Technologies with over 4 years experience. I specialize in Python backend systems, distributed task processing, and internal tooling platforms.
+              I'm a <span className="text-highlight">Software Engineer (II)</span> at <span className="text-highlight">Zebra Technologies</span> with 4 years experience. I specialize in <span className="text-highlight">Python backend systems</span>, <span className="text-highlight">distributed task processing</span>, and <span className="text-highlight">internal tooling platforms</span>.
             </p>
             <p>
               I love solving problems, exploring new tech, and building systems that make life easier.
