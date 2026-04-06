@@ -4,6 +4,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import headshot from '../images/Me.png';
 import useInView from '../hooks/useInView';
+import headshotPhrases from '../config/headshotPhrases.json';
 import "../styles/Home.scss";
 
 function RevealSection({ children, className = '', ...rest }) {
@@ -24,11 +25,14 @@ export class Home extends Component {
       imgLoaded: false,
       headshotRevealed: false,
       scrolled: false,
+      bubbleText: '',
+      headshotActive: false,
     };
     this._timers = [];
     this._pendingContinue = null; // function to call when image loads to continue typing
     this._pendingReveal = null; // function to call when image loads to reveal headshot
     this._handleScroll = this._handleScroll.bind(this);
+    this._handleHeadshotClick = this._handleHeadshotClick.bind(this);
   }
 
   componentDidMount() {
@@ -121,6 +125,15 @@ export class Home extends Component {
     this.setState({ scrolled });
   }
 
+  _handleHeadshotClick() {
+    if (!this.state.typingComplete || this.state.headshotActive) return;
+    const phrase = headshotPhrases[Math.floor(Math.random() * headshotPhrases.length)];
+    this.setState({ bubbleText: phrase, headshotActive: true });
+    this._timers.push(setTimeout(() => {
+      this.setState({ bubbleText: '', headshotActive: false });
+    }, 2000));
+  }
+
   componentWillUnmount() {
     this._timers.forEach(t => clearTimeout(t));
     this._timers = [];
@@ -147,19 +160,33 @@ export class Home extends Component {
     return (
       <div className="home" id="top">
         <div className={aboutClass}>
-          <img
-            className={`headshot ${this.state.imgLoaded ? 'loaded' : 'loading'} ${this.state.headshotRevealed ? 'revealed' : ''}`}
-            src={headshot}
-            alt="Me"
-            onLoad={() => this.setState({ imgLoaded: true }, () => {
-              // If a reveal is pending, run it now
-              if (this._pendingReveal) {
-                this._pendingReveal();
-                this._pendingReveal = null;
-              }
-            })}
-            loading="lazy"
-          />
+          <div className="headshot-container">
+            {this.state.bubbleText && (
+              <span className="speech-bubble">{this.state.bubbleText}</span>
+            )}
+            <div
+              className={`headshot-wrapper${this.state.headshotActive ? ' headshot-wrapper--active' : ''}`}
+              onClick={this._handleHeadshotClick}
+              role="button"
+              tabIndex={typingComplete ? 0 : -1}
+              aria-label="Click for a surprise"
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') this._handleHeadshotClick(); }}
+            >
+              <img
+                className={`headshot ${this.state.imgLoaded ? 'loaded' : 'loading'} ${this.state.headshotRevealed ? 'revealed' : ''}`}
+                src={headshot}
+                alt="Me"
+                onLoad={() => this.setState({ imgLoaded: true }, () => {
+                  // If a reveal is pending, run it now
+                  if (this._pendingReveal) {
+                    this._pendingReveal();
+                    this._pendingReveal = null;
+                  }
+                })}
+                loading="lazy"
+              />
+            </div>
+          </div>
           <h1 aria-label="Hi, I'm Rob McIlrath">
             <span className="typewriter typewriter-before" aria-hidden="true">{beforeName}</span>
             <span className="name-highlight">{firstNamePart}</span>
